@@ -9,7 +9,9 @@ class Solution(object):
         #if len(ls) == 0 : return 0
         if len(s) == 0 : return 0
         ls = list(s.strip())
-
+        # print(ls)
+        if not ls:
+            return 0
         sign = -1 if ls[0] == '-' else 1
         if ls[0] in ['-','+'] : del ls[0]
         ret, i = 0, 0
@@ -18,7 +20,7 @@ class Solution(object):
             i += 1
         return max(-2**31, min(sign * ret,2**31-1))
 
-        
+
 class Solution:
     # @return an integer
     def atoi(self, str):
