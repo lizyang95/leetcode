@@ -9,8 +9,11 @@ class Solution(object):
         # return(str(bin(n)).count('1'))
         counter = 0
         while n:
-            n &= (n - 1)
-            counter += 1
+            # n &= (n - 1)
+            # counter += 1
+            counter += (n&1)
+            n = n>>1
+            print(n)
         return counter
 
 def main():
