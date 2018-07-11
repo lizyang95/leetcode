@@ -17,6 +17,19 @@ class Solution(object):
             j += 1
         return True if i == len(s) else False
 
+        # binary and map
+        # from collections import defaultdict
+        # import bisect as bi
+        # idx = defaultdict(list)
+        # for i, c in enumerate(t):
+        #     idx[c].append(i)
+        # prev = 0
+        # for i, c in enumerate(s):
+        #     j = bi.bisect_left(idx[c], prev)
+        #     if j == len(idx[c]): return False
+        #     prev = idx[c][j] + 1
+        # return True
+
 
 class Solution(object):
     def isSubsequence(self, s, t):
