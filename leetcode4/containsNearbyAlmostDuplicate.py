@@ -6,6 +6,9 @@ class Solution(object):
         :type t: int
         :rtype: bool
         """
+        # k: distance
+        # t: value diff
+        
 
 
 
