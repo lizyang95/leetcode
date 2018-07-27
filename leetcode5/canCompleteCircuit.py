@@ -5,13 +5,16 @@ class Solution(object):
         :type cost: List[int]
         :rtype: int
         """
-        gas.extend(gas)
-        cost.extend(cost)
-        stops = len(gas)
-        print(gas,cost,stops)
-        for i in range(stops):
-            step = 0
-            while step < 
+        diff = [gas[i] - cost[i] for i in range(len(cost))]
+        if sum(diff)<0:
+            return -1
+        gain = [diff[0]]
+        for i in range(len(gas)-1):
+            gain.append(diff[i+1]+gain[-1])
+        minloc = gain.index(min(gain))
+        return (minloc+1)%len(gas)
+
+
 
 sol = Solution()
 gas  = [1,2,3,4,5]
