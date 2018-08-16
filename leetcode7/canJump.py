@@ -6,7 +6,7 @@ class Solution(object):
                 farthest=nums[i]+i
                 # print (farthest)
         return farthest>=len(nums)-1
-        
+
     def canJump2(self, nums):
         """
         :type nums: List[int]
