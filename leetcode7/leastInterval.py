@@ -5,31 +5,41 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        counter = {task:tasks.count(task) for task in tasks}
-        res = []
-        while 1:
-            print(counter)
-            deletelist = []
-            for task in counter:
-                if not counter[task]:
-                    deletelist.append(task)
-            for task in deletelist:
-                del counter[task]
-            if not len(counter):
-                while res[-1] == ' ':
-                    res.pop()
-                return len(res)
-            keys = sorted(counter,key=lambda k:counter[k],reverse=True)
-            if len(counter)>=n+1:
-                for key in keys[:n+1]:
-                    res.append(key)
-                    counter[key] -=1
-            else:
-                for key in keys:
-                    res.append(key)
-                    counter[key] -= 1
-                for i in range(n+1-len(keys)):
-                    res.append(' ')
+        task_counts = collections.Counter(tasks).values()
+        M = max(task_counts)
+        Mct = task_counts.count(M)
+        return max(len(tasks), (M - 1) * (N + 1) + Mct)
+
+
+    # O(nlogn) to place most popular and distinct tasks first
+    # We always place different tasks in a cycle which will minimize steps
+    # If not different tasks can be placed in a cycle, place an `idle`.
+
+    def _leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        n += 1
+        ans = 0
+        d = collections.Counter(tasks)
+        heap = [-c for c in d.values()]
+        heapq.heapify(heap)
+        while heap:
+            stack = []
+            cnt = 0
+            for _ in range(n):
+                if heap:
+                    c = heapq.heappop(heap)
+                    cnt += 1
+                    if c < -1:
+                        stack.append(c + 1)
+            for item in stack:
+                heapq.heappush(heap, item)
+            ans += heap and n or cnt # == if heap then n else cnt
+        return ans
+
 
 sol = Solution()
 tasks = ["A","A","A","A","A","A","B","C","D","E","F","G"]
