@@ -22,30 +22,35 @@
 #        Return None if this NestedInteger holds a single integer
 #        :rtype List[NestedInteger]
 #        """
+from collections import deque
 class NestedIterator(object):
-
     def __init__(self, nestedList):
-        self.stack = [[nestedList, 0]]
+        """
+        Initialize your data structure here.
+        :type nestedList: List[NestedInteger]
+        """
+        self.q=deque()
+        self.flatten(nestedList)
+
+    def flatten(self,nestedList):
+        for l in nestedList:
+            if l.isInteger():
+                self.q.append(l.getInteger())
+            else:
+                self.flatten(l.getList())
 
     def next(self):
-        self.hasNext()
-        nestedList, i = self.stack[-1]
-        self.stack[-1][1] += 1
-        return nestedList[i].getInteger()
+        """
+        :rtype: int
+        """
+        return self.q.popleft()
 
     def hasNext(self):
-        s = self.stack
-        while s:
-            nestedList, i = s[-1]
-            if i == len(nestedList):
-                s.pop()
-            else:
-                x = nestedList[i]
-                if x.isInteger():
-                    return True
-                s[-1][1] += 1
-                s.append([x.getList(), 0])
-        return False
+        """
+        :rtype: bool
+        """
+        return len(self.q)>0
+
 # Your NestedIterator object will be instantiated and called as such:
 # i, v = NestedIterator(nestedList), []
 # while i.hasNext(): v.append(i.next())
